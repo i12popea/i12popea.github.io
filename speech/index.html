@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- import the webpage's javascript file -->
+    <!--<script src="/script.js" defer></script>-->
+  </head>  
+  <body>
+
+    <button id="button" onclick="toggleStartStop()"></button>
+    
+  </body>
+  <script>
+
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+var recognizing;
+const recognition = new window.SpeechRecognition();
+
+recognition.lang = 'es-ES';
+recognition.continuous = true;
+recognition.interimResults = true;
+reset();
+recognition.onend = reset;
+
+recognition.onresult = function(event) {
+  alert(event.results[0][0].transcript);
+}
+
+function reset() {
+  recognizing = false;
+  document.getElementById("button").innerHTML = "Click to Speak";
+  //button.innerHTML = "Click to Speak";
+}
+
+function toggleStartStop() {
+  if (recognizing) {
+    recognition.stop();
+    reset();
+  } else {
+    recognition.start();
+    recognizing = true;
+    document.getElementById("button").innerHTML = "Click to Stop";
+    //button.innerHTML = "Click to Stop";
+  }
+}
+
+  </script>
+</html>
